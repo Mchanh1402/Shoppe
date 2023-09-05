@@ -1,4 +1,6 @@
 import { AxiosError, isAxiosError, HttpStatusCode } from 'axios'
+import config from 'src/constants/config'
+import userImage from 'src/assets/images/avtdf.jpg'
 
 export function isAxiosUnprocessableEntityError<FormError>(error: unknown): error is AxiosError<FormError> {
   return isAxiosError(error) && error.response?.status === HttpStatusCode.UnprocessableEntity
@@ -31,3 +33,5 @@ export const getIdFormNameId = (nameId: string) => {
   const arr = nameId.split('-i-')
   return arr[arr.length - 1]
 }
+
+export const getAvatarUrl = (avatarName?: string) => (avatarName ? `${config.baseURL}images/${avatarName}` : userImage)

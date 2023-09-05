@@ -1,19 +1,20 @@
-import { Link } from 'react-router-dom'
+import classNames from 'classnames'
+import { useContext } from 'react'
+import { Link, NavLink } from 'react-router-dom'
 import path from 'src/constants/path'
+import { AppContext } from 'src/contexts/app.context'
+import { getAvatarUrl } from 'src/utils/utils'
 
 export default function UserSildeNav() {
+  const { profile } = useContext(AppContext)
   return (
     <div>
       <div className='flex items-center border-b border-gray-200 py-4'>
         <Link to={path.profile} className='h-12 w-12 flex-shrink-0 overflow-hidden rounded-full border border-black/10'>
-          <img
-            src='https://scontent.fsgn8-4.fna.fbcdn.net/v/t39.30808-6/362956330_649232147140386_4446299982994874975_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=vDsNu5fmvUAAX--JJ8f&_nc_oc=AQmWOnScu0DFOusYqSoO8jLUHIJWXCqmAZhrvQii-P7BL0ZJpKAZQfe2LcwIieJoMUw&_nc_ht=scontent.fsgn8-4.fna&oh=00_AfCcqPgDjilU36LCAufK6l9nOv_ytxsIToiKngTVaHShZQ&oe=64E86C51'
-            alt=''
-            className='h-full w-full object-cover'
-          />
+          <img src={getAvatarUrl(profile?.avatar)} alt='' className='h-full w-full object-cover' />
         </Link>
         <div className='pl-2 line-clamp-1'>
-          <div className='mb-1 truncate font-semibold text-gray-600  '>nguyenminhchanh</div>
+          <div className='mb-1 truncate font-semibold text-gray-600  '>{profile?.name}</div>
           <Link to={path.profile} className='flex items-center capitalize text-gray-500'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
@@ -34,7 +35,15 @@ export default function UserSildeNav() {
         </div>
       </div>
       <div className='mt-7 '>
-        <Link to={path.profile} className='flex items-center capitalize text-orange transition-colors'>
+        <NavLink
+          to={path.profile}
+          className={({ isActive }) =>
+            classNames('flex items-center capitalize transition-colors', {
+              'text-orange': isActive,
+              'text-gray-600': !isActive
+            })
+          }
+        >
           <svg
             xmlns='http://www.w3.org/2000/svg'
             fill='none'
@@ -50,8 +59,16 @@ export default function UserSildeNav() {
             />
           </svg>
           Tài khoản của tôi
-        </Link>
-        <Link to={path.changePassword} className='mt-4 flex items-center capitalize text-gray-600 transition-colors'>
+        </NavLink>
+        <NavLink
+          to={path.changePassword}
+          className={({ isActive }) =>
+            classNames('mt-4 flex items-center capitalize transition-colors', {
+              'text-orange': isActive,
+              'text-gray-600': !isActive
+            })
+          }
+        >
           <svg
             xmlns='http://www.w3.org/2000/svg'
             fill='none'
@@ -67,8 +84,16 @@ export default function UserSildeNav() {
             />
           </svg>
           Đổi mật khẩu
-        </Link>
-        <Link to={path.historyPurchase} className='mt-4 flex items-center capitalize text-gray-600 transition-colors'>
+        </NavLink>
+        <NavLink
+          to={path.historyPurchase}
+          className={({ isActive }) =>
+            classNames('mt-4 flex items-center capitalize transition-colors', {
+              'text-orange': isActive,
+              'text-gray-600': !isActive
+            })
+          }
+        >
           <svg
             xmlns='http://www.w3.org/2000/svg'
             fill='none'
@@ -84,7 +109,7 @@ export default function UserSildeNav() {
             />
           </svg>
           Đơn mua
-        </Link>
+        </NavLink>
       </div>
     </div>
   )
